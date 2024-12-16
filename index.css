@@ -62,7 +62,7 @@ main{
 
 }
 .line{
-    font-size: 40px;
+    font-size: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,6 +87,15 @@ main{
 }
 .start:hover{
     opacity: 80%;
+}
+.restart{
+    background-color: #00bce0;
+    border-radius: 0.5em;
+    font-size: 0.5em;
+    width: 30%;
+    height: 45%;
+    border: none;
+    cursor: pointer;
 }
 .buttoncode{
     width : 100%;
@@ -120,7 +129,7 @@ main{
 }
 #body{
     width: 25%;
-    top: 41%;
+    top: 42%;
     left: 53%;
 }
 #Larm{
@@ -135,16 +144,28 @@ main{
 }
 #Lleg{
     width: 10%;
-    bottom: 27%;
+    bottom: 26%;
     left: 57%;
 }
 #Rleg{
     width: 10%;
-    bottom: 27%;
+    bottom: 26%;
     right: 26%;
+}
+#gameover{
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+#start{
+    width: 100%;
+    height: 100%;
 }
 .fail,
 .success,
 .restart{
+    display: none;
+}
+.invisible {
     display: none;
 }
