@@ -4,47 +4,44 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="index.css">
-        <title>Elice Hangman</title>
+        <title>Hangman Game</title>
     </head>
     <body>
         <main>
             <div class="body1">
-                <img class = "image" id="box" src="https://elice-contents.github.io/elice-hangman-game/assets/gallows.png" alt="error">
-                <img class = "image" id="head" src="https://elice-contents.github.io/elice-hangman-game/assets/head.png" alt="error">
-                <img class = "image" id="body" src="https://elice-contents.github.io/elice-hangman-game/assets/body.png" alt="error">
-                <img class = "image" id="Larm" src="https://elice-contents.github.io/elice-hangman-game/assets/left-arm.png" alt="error">
-                <img class = "image" id="Rarm" src="https://elice-contents.github.io/elice-hangman-game/assets/right-arm.png" alt="error">
-                <img class = "image" id="Lleg" src="https://elice-contents.github.io/elice-hangman-game/assets/left-leg.png" alt="error">
-                <img class = "image" id="Rleg" src="https://elice-contents.github.io/elice-hangman-game/assets/right-leg.png" alt="error">
+                <img class = "invisible" id="box" src="https://elice-contents.github.io/elice-hangman-game/assets/gallows.png" alt="error">
+                <img class = "invisible" id="head" src="https://elice-contents.github.io/elice-hangman-game/assets/head.png" alt="error">
+                <img class = "invisible" id="body" src="https://elice-contents.github.io/elice-hangman-game/assets/body.png" alt="error">
+                <img class = "invisible" id="Larm" src="https://elice-contents.github.io/elice-hangman-game/assets/left-arm.png" alt="error">
+                <img class = "invisible" id="Rarm" src="https://elice-contents.github.io/elice-hangman-game/assets/right-arm.png" alt="error">
+                <img class = "invisible" id="Lleg" src="https://elice-contents.github.io/elice-hangman-game/assets/left-leg.png" alt="error">
+                <img class = "invisible" id="Rleg" src="https://elice-contents.github.io/elice-hangman-game/assets/right-leg.png" alt="error">
 
             </div>
             <div class="body2">
                 <section class ="header">
-                    <span class="headerbox">남은 시도 횟수:
-                        <span class="number">7</span>
+                    <span class="headerbox">남은 시도 횟수 : 
+                        <span class="number" id ="tries">7</span>
                     </span>
-                    <span class="headerbox">남은 시간:
+                    <span class="headerbox">남은 시간 : 
                         <span class="time">60</span>
                     </span>
                 </section>
                 <section class = "line">
-                    <div class="word"></div>
-                    <div></div>
+                    <div class="word invisible"></div>
+                    <div class="answer invisible"></div>
+                    <div class ="wordtext invisible" id = "startText"></div>
                     <div class= "border">
-                        <span class="titlename">엘리스 행맨 게임</span>
-                        <button class="start">시작하기</button>
+                        <span class="titlename">행맨 게임 Help Me!!</span>
+                        <button class="start" id = "startButton">시작하기</button>
                     </div>
-                    <div>
-                        <span class="fail">실패하였습니다.</span>
-                        <button class="restart">처음부터 다시하기</button>
+                    <div class="fail invisible" id="failText">
+                        <span>실패하였습니다.</span>
+                        <button class="restart" id="restartButton">다시하기</button>
                     </div>
-                    <div>
-                        <span class="success">성공하였습니다.</span>
-                        <button class="restart">처음부터 다시하기</button>
-                    </div>
-                    <div>
-                        <span class="fail">실패하였습니다.</span>
-                        <button class="restart">처음부터 다시하기</button>
+                    <div class="success invisible" id="successText">
+                        <span>성공하였습니다.</span>
+                        <button class="restart" id="restartButton">다시하기</button>
                     </div>
                     
                 </section>
