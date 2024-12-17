@@ -1,67 +1,70 @@
-
-body{
-    display : flex;
+body {
+    display: flex;
     justify-content: center;
     align-items: center;
     background-color: black;
     width: 100%;
     height: 100vh;
     margin: 0;
-
 }
-main{
+
+main {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     width: 800px;
     height: 600px;
     border-radius: 70px;
     overflow: hidden;
 }
-.body1{
+
+.body1 {
     background-color: #c6b3ff;
     position: relative;
 }
-.body2{
+
+.body2 {
     background-color: #8842ff;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
     display: flex;
     padding: 5%;
-
 }
-.image{
+
+.image {
     /* display: none; */
     position: absolute;
 }
-.header{
+
+.header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap : 1em;
+    gap: 1em;
     margin: 10px;
-
 }
-.headerbox{
+
+.headerbox {
     text-align: center;
     background-color: #c6b3ff;
     padding: 0.6em 0.7em;
     border-radius: 0.5em;
     font-weight: bold;
 }
-.number{
+
+.number {
     color: white;
     background-color: #c6b3ff;
     border-radius: 0.5em;
-
 }
-.time{
+
+.time {
     color: white;
     background-color: #c6b3ff;
     border-radius: 0.5em;
-
 }
-.line{
+
+.line {
     font-size: 35px;
     display: flex;
     justify-content: center;
@@ -69,14 +72,13 @@ main{
     flex-direction: column;
     text-align: center;
     font-weight: bold;
-
-
 }
 
-.titlename{
+.titlename {
     text-align: center;
 }
-.start{
+
+.start {
     background-color: #00bce0;
     border-radius: 0.5em;
     font-size: 0.5em;
@@ -85,10 +87,12 @@ main{
     border: none;
     cursor: pointer;
 }
-.start:hover{
+
+.start:hover {
     opacity: 80%;
 }
-.restart{
+
+.restart {
     background-color: #00bce0;
     border-radius: 0.5em;
     font-size: 0.5em;
@@ -97,15 +101,16 @@ main{
     border: none;
     cursor: pointer;
 }
-.buttoncode{
-    width : 100%;
+
+.buttoncode {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap : 0.1em;
-
+    gap: 0.1em;
 }
-.buttoncode > button{
+
+.buttoncode > button {
     width: 12%;
     font-size: 1.5em;
     background-color: #c6b3ff;
@@ -113,59 +118,71 @@ main{
     border-radius: 0.3em;
     cursor: pointer;
     border: none;
-
 }
-.buttoncode > button:hover{
+
+.buttoncode > button:hover {
     opacity: 80%;
 }
-#box{
+
+#box {
     width: 80%;
     margin: 30px;
+    position: absolute;
 }
-#head{
+
+#head {
     width: 30%;
     top: 12%;
     left: 50%;
+    position: absolute;
 }
-#body{
+
+#body {
     width: 25%;
     top: 42%;
     left: 53%;
+    position: absolute;
 }
-#Larm{
+
+#Larm {
     width: 18%;
     top: 44%;
     left: 40%;
+    position: absolute;
 }
-#Rarm{
+
+#Rarm {
     width: 18%;
     top: 44%;
     right: 9%;
+    position: absolute;
 }
-#Lleg{
+
+#Lleg {
     width: 10%;
     bottom: 26%;
     left: 57%;
+    position: absolute;
 }
-#Rleg{
+
+#Rleg {
     width: 10%;
     bottom: 26%;
     right: 26%;
+    position: absolute;
 }
-#gameover{
-    width: 100%;
-    height: 100%;
-    display: none;
-}
-#start{
+
+#start {
     width: 100%;
     height: 100%;
 }
+
 .fail,
 .success,
-.restart{
+.restart {
     display: none;
 }
+
 .invisible {
     display: none;
 }

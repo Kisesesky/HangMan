@@ -1,10 +1,12 @@
 export function makeElementVisible(element) {
-    element.classList.add("titlename");
-    element.classList.remove("invisible");
-  }
-  
-  export function makeElementInvisible(element) {
-    element.classList.remove("titlename");
-    element.classList.add("invisible");
-  }
-  
+  element.classList.remove("invisible");
+  element.style.display = 'block';
+  element.classList.add("border");
+}
+
+export function makeElementInvisible(element) {
+  element.classList.add("invisible");
+  element.style.display = 'none';
+  element.classList.remove("border");
+
+}

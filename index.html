@@ -1,81 +1,78 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="index.css">
-        <title>Hangman Game</title>
-    </head>
-    <body>
-        <main>
-            <div class="body1">
-                <img class = "invisible" id="box" src="https://elice-contents.github.io/elice-hangman-game/assets/gallows.png" alt="error">
-                <img class = "invisible" id="head" src="https://elice-contents.github.io/elice-hangman-game/assets/head.png" alt="error">
-                <img class = "invisible" id="body" src="https://elice-contents.github.io/elice-hangman-game/assets/body.png" alt="error">
-                <img class = "invisible" id="Larm" src="https://elice-contents.github.io/elice-hangman-game/assets/left-arm.png" alt="error">
-                <img class = "invisible" id="Rarm" src="https://elice-contents.github.io/elice-hangman-game/assets/right-arm.png" alt="error">
-                <img class = "invisible" id="Lleg" src="https://elice-contents.github.io/elice-hangman-game/assets/left-leg.png" alt="error">
-                <img class = "invisible" id="Rleg" src="https://elice-contents.github.io/elice-hangman-game/assets/right-leg.png" alt="error">
-
-            </div>
-            <div class="body2">
-                <section class ="header">
-                    <span class="headerbox">남은 시도 횟수 : 
-                        <span class="number" id ="tries">7</span>
-                    </span>
-                    <span class="headerbox">남은 시간 : 
-                        <span class="time">60</span>
-                    </span>
-                </section>
-                <section class = "line">
-                    <div class="word invisible"></div>
-                    <div class="answer invisible"></div>
-                    <div class ="wordtext invisible" id = "startText"></div>
-                    <div class= "border">
-                        <span class="titlename">행맨 게임 Help Me!!</span>
-                        <button class="start" id = "startButton">시작하기</button>
-                    </div>
-                    <div class="fail invisible" id="failText">
-                        <span>실패하였습니다.</span>
-                        <button class="restart" id="restartButton">다시하기</button>
-                    </div>
-                    <div class="success invisible" id="successText">
-                        <span>성공하였습니다.</span>
-                        <button class="restart" id="restartButton">다시하기</button>
-                    </div>
-                    
-                </section>
-                <section class="buttoncode">
-                    <button class = "button" id="buttonA">A</button>
-                    <button class = "button" id="buttonB">B</button>
-                    <button class = "button" id="buttonC">C</button>
-                    <button class = "button" id="buttonD">D</button>
-                    <button class = "button" id="buttonE">E</button>
-                    <button class = "button" id="buttonF">F</button>
-                    <button class = "button" id="buttonG">G</button>
-                    <button class = "button" id="buttonH">H</button>
-                    <button class = "button" id="buttonI">I</button>
-                    <button class = "button" id="buttonJ">J</button>
-                    <button class = "button" id="buttonK">K</button>
-                    <button class = "button" id="buttonL">L</button>
-                    <button class = "button" id="buttonM">M</button>
-                    <button class = "button" id="buttonN">N</button>
-                    <button class = "button" id="buttonO">O</button>
-                    <button class = "button" id="buttonP">P</button>
-                    <button class = "button" id="buttonQ">Q</button>
-                    <button class = "button" id="buttonR">R</button>
-                    <button class = "button" id="buttonS">S</button>
-                    <button class = "button" id="buttonT">T</button>
-                    <button class = "button" id="buttonU">U</button>
-                    <button class = "button" id="buttonV">V</button>
-                    <button class = "button" id="buttonW">W</button>
-                    <button class = "button" id="buttonX">X</button>
-                    <button class = "button" id="buttonT">Y</button>
-                    <button class = "button" id="buttonZ">Z</button>
-                </section>
-            </div>
-        </main>
-        
-    </body>
-    <script type="module" src="index.css"></script>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css">
+    <title>Hangman Game</title>
+</head>
+<body>
+    <main>
+        <div class="body1">
+            <img class="invisible" id="box" src="https://elice-contents.github.io/elice-hangman-game/assets/gallows.png" alt="error">
+            <img class="invisible" id="head" src="https://elice-contents.github.io/elice-hangman-game/assets/head.png" alt="error">
+            <img class="invisible" id="body" src="https://elice-contents.github.io/elice-hangman-game/assets/body.png" alt="error">
+            <img class="invisible" id="Larm" src="https://elice-contents.github.io/elice-hangman-game/assets/left-arm.png" alt="error">
+            <img class="invisible" id="Rarm" src="https://elice-contents.github.io/elice-hangman-game/assets/right-arm.png" alt="error">
+            <img class="invisible" id="Lleg" src="https://elice-contents.github.io/elice-hangman-game/assets/left-leg.png" alt="error">
+            <img class="invisible" id="Rleg" src="https://elice-contents.github.io/elice-hangman-game/assets/right-leg.png" alt="error">
+        </div>
+        <div class="body2">
+            <section class="header">
+                <span class="headerbox">남은 시도 횟수 : 
+                    <span class="number" id="tries">7</span>
+                </span>
+                <span class="headerbox">남은 시간 : 
+                    <span class="time" id="time">60</span>
+                </span>
+            </section>
+            <section class="line">
+                <div class="word" id="wordBoard"></div>
+                <div class="answer invisible" id="answerBoard"></div>
+                <div class="wordtext invisible" id="startText"></div>
+                <div class="border">
+                    <span class="titlename" id="starttitle">행맨 게임 Help Me!!</span>
+                    <button class="start" id="startButton">시작하기</button>
+                </div>
+                <div class="fail invisible" id="failText">
+                    <span>실패하였습니다.</span>
+                    <button class="restart" id="restartButtonFail">다시하기</button>
+                </div>
+                <div class="success invisible" id="successText">
+                    <span>성공하였습니다.</span>
+                    <button class="restart" id="restartButtonSuccess">다시하기</button>
+                </div>
+            </section>
+            <section class="buttoncode">
+                <button class="button" id="buttonA">A</button>
+                <button class="button" id="buttonB">B</button>
+                <button class="button" id="buttonC">C</button>
+                <button class="button" id="buttonD">D</button>
+                <button class="button" id="buttonE">E</button>
+                <button class="button" id="buttonF">F</button>
+                <button class="button" id="buttonG">G</button>
+                <button class="button" id="buttonH">H</button>
+                <button class="button" id="buttonI">I</button>
+                <button class="button" id="buttonJ">J</button>
+                <button class="button" id="buttonK">K</button>
+                <button class="button" id="buttonL">L</button>
+                <button class="button" id="buttonM">M</button>
+                <button class="button" id="buttonN">N</button>
+                <button class="button" id="buttonO">O</button>
+                <button class="button" id="buttonP">P</button>
+                <button class="button" id="buttonQ">Q</button>
+                <button class="button" id="buttonR">R</button>
+                <button class="button" id="buttonS">S</button>
+                <button class="button" id="buttonT">T</button>
+                <button class="button" id="buttonU">U</button>
+                <button class="button" id="buttonV">V</button>
+                <button class="button" id="buttonW">W</button>
+                <button class="button" id="buttonX">X</button>
+                <button class="button" id="buttonY">Y</button>
+                <button class="button" id="buttonZ">Z</button>
+            </section>
+        </div>
+    </main>
+    <script type="module" src="./index.js"></script>
+</body>
 </html>
