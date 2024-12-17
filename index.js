@@ -1,26 +1,21 @@
-import Game from "./game.js";
+import System from "./system.js";
+import { makeElementInvisible } from "./utils.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-    const startButton = document.getElementById("startButton");
-    const restartButtons = document.querySelectorAll(".restart");
-    const startText = document.getElementById("startText");
-    const successText = document.getElementById("successText");
-    const failText = document.getElementById("failText");
-    const border = document.querySelector(".border");
-    let currentGame = null;
+  const resetButtonElements = document.getElementsByClassName("reset-button");
+  const answerTextElement = document.getElementById("answerText");
+  let currentSystem = new System();
 
-    startButton.addEventListener("click", () => {
-        startText.style.display = 'none'; 
-        border.style.display = 'none'; 
-        currentGame = new Game();
-        currentGame.startGame();
-    });
+  setTimeout(() => {
+    const backgroundContainer = document.querySelector('.background-container');
+    backgroundContainer.style.opacity = '0';
+  }, 1800);
 
-    restartButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            currentGame.resetGame();
-            currentGame.startGame();
-            border.style.display = 'block';
-        });
+  Array.from(resetButtonElements).forEach((element) => {
+    element.addEventListener("click", () => {
+      currentSystem.cleanup();
+      makeElementInvisible(answerTextElement);
+      currentSystem = new System();
     });
+  });
 });

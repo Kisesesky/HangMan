@@ -1,170 +1,108 @@
-import { ANSWERS, ATTEMPTS, TIME_LIMIT } from "./constants.js";
+import { ANSWERS, TIME_LIMIT } from "./constants.js";
 import { makeElementInvisible, makeElementVisible } from "./utils.js";
 
 class Game {
-    constructor() {
-        this.attemptsLeft = ATTEMPTS;
-        this.timerCount = TIME_LIMIT;
-        this.answer = ANSWERS[Math.floor(Math.random() * ANSWERS.length)];
-        this.problemWord = this.answer.split('').map(char => char === ' ' ? ' ' : ' _').join('');
-        this.stage = 0;
-        this.gameOver = false; 
+  #timerCount;
+  #timerId;
 
-        this.imag = document.querySelectorAll('.body1 > img');
-        this.timer = document.getElementById('time');
-        this.word = document.getElementById('wordBoard');
-        this.answerBoard = document.getElementById('answerBoard');
-        this.alphabet = document.querySelectorAll('.buttoncode > button');
-        this.tries = document.getElementById('tries');
-        this.successText = document.getElementById('successText');
-        this.failText = document.getElementById("failText");
-        this.restartButton1 = document.getElementById("restartButtonFail");
-        this.restartButton2 = document.getElementById("restartButtonSuccess");
+  #currentStage;
+  #answer;
+  #problemText;
 
+  hangmanElements = document.querySelectorAll(".canvas > img");
+  timerElement = document.getElementById("timer");
+  problemTextElement = document.getElementById("problemText");
+  answerTextElement = document.getElementById("answerText");
+  alphabetButtonElements = document.querySelectorAll(".alphabets > button");
+  alphabetEventListeners = [];
 
-        this.word.innerText = this.problemWord;
-        this.tries.innerText = this.attemptsLeft;
-        this.restartButton1.addEventListener('click', ()=> this.resetGame());
-        this.restartButton2.addEventListener('click', ()=> this.resetGame());
+  constructor() {
+    this.#timerCount = TIME_LIMIT;
+    this.#currentStage = 0;
+    this.#answer = ANSWERS[Math.floor(Math.random() * ANSWERS.length)];
+    console.log(this.#answer);
+    this.#problemText = this.#answer
+      .split("")
+      .reduce((acc, cur) => (cur === " " ? acc + " " : acc + "_"), "");
 
+    this.timerElement.innerText = this.#timerCount;
+    this.problemTextElement.innerText = this.#problemText;
+    makeElementVisible(this.problemTextElement);
+    this.answerTextElement.innerText = `정답: ${this.#answer}`;
+    makeElementInvisible(this.answerTextElement);
+
+    return new Promise((resolve) => {
+      this.#timerId = setInterval(() => {
+        if (this.#timerCount <= 0)resolve(false);
+        else this.#decreaseTimerCount();
+      }, 1000);
+
+      this.alphabetButtonElements.forEach((element) => {
+        const onClick = () => {
+          this.#clickAlphabet(element, resolve);
+          element.removeEventListener("click", onClick);
+        };
+        this.alphabetEventListeners.push(onClick);
+        element.addEventListener("click", onClick);
+      });
+    }).then(this.#gameOver);
+  }
+
+  #clickAlphabet = (element, resolve) => {
+    element.classList.add("button-invisible");
+    element.removeEventListener("click", () =>
+      this.#clickAlphabet(element, resolve)
+    );
+
+    if (this.#answer.includes(element.innerText)) {
+      this.#updateProblemText(element.innerText);
+      if (this.#problemText === this.#answer) resolve(true);
+    } else {
+      if (this.#currentStage < this.hangmanElements.length - 1)
+        this.#nextStage();
+      else resolve(false);
     }
+  };
 
-    startTimer() {
-        this.timerId = setInterval(() => {
-            if (this.timerCount <= 0 || this.gameOver) {
-                clearInterval(this.timerId);
-                if (this.timerCount <= 0) {
-                    this.gameOverHandler(false);
-                }
-                return;
-            }
-            this.timerCount--;
-            this.timer.innerText = this.timerCount;
+  #decreaseTimerCount() {
+    this.#timerCount--;
+    this.timerElement.innerText = this.#timerCount;
+  }
 
-            if (this.timerCount <= 10) {
-                this.timer.style.color = 'red';
-            }
-        }, 1000);
-    }
+  #nextStage() {
+    this.#currentStage++;
+    Array.from(this.hangmanElements)
+      .slice(0, this.#currentStage)
+      .forEach((element) => element.classList.remove("invisible"));
+  }
 
-    handleClickAlphabet(e) {
-        const clickedLetter = e.target.innerText.toUpperCase(); 
-        e.target.disabled = true;
+  #updateProblemText(newAlphabet) {
+    this.#problemText = this.#problemText
+      .split("")
+      .reduce((acc, cur, index) => {
+        if (cur === " " || cur !== "_") return acc + cur;
+        if (this.#answer[index] === newAlphabet) return acc + newAlphabet;
+        else return acc + "_";
+      }, "");
+    this.problemTextElement.innerText = this.#problemText;
+  }
 
-        if (this.answer.includes(clickedLetter)) {
-            this.updateProblemWord(clickedLetter);
-            if (this.problemWord === this.answer) {
-                this.gameOverHandler(true);
-            }
-        } else {
-            this.attemptsLeft--; 
-            this.tries.innerText = this.attemptsLeft;
-            if (this.attemptsLeft === 0) {
-                this.gameOverHandler(false); 
-            } else {
-                this.updateHangman();
-            }
-        }
-    }
+  #gameOver = (result) => {
+    clearInterval(this.#timerId);
 
-    updateProblemWord(letter) {
-        this.problemWord = this.problemWord.split('').map((char, idx) => {
-            return this.answer[idx] === letter ? letter : char;
-        }).join('');
-        this.word.innerText = this.problemWord;
-    }
+    makeElementVisible(this.answerTextElement);
 
-    updateHangman() {
-        if (this.stage < this.imag.length) {
-            this.imag[this.stage].classList.remove('invisible');
-            this.stage++;
-        }
-    }
+    this.hangmanElements.forEach((element) =>
+      element.classList.add("invisible")
+    );
+    makeElementInvisible(this.problemTextElement);
+    this.alphabetButtonElements.forEach((element, index) => {
+      element.classList.remove("button-invisible");
+      element.removeEventListener("click", this.alphabetEventListeners[index]);
+    });
 
-    gameOverHandler(result) {
-        if (this.gameOver) return;
-        this.gameOver = true;
-        clearInterval(this.timerId);
-     
-        while (this.stage < this.imag.length) {
-            this.updateHangman();
-        }
-     
-        if (result) {
-            makeElementVisible(this.successText);
-            makeElementVisible(this.restartButton2); 
-            makeElementInvisible(this.word);
-            makeElementInvisible(this.answerBoard);
-            makeElementInvisible(this.restartButton1);
-        } else {
-            makeElementVisible(this.failText);
-            makeElementVisible(this.restartButton1); 
-            makeElementInvisible(this.word);
-            makeElementInvisible(this.answerBoard);
-            makeElementInvisible(this.restartButton2);
-        }
-     
-        this.alphabet.forEach(button => button.disabled = true);
-     
-    
-
-    }
-        startGame(){
-        if (this.gameOver) return;
-        this.startTimer(); 
-        this.alphabet.forEach(button => {
-            button.addEventListener('click', (e) => this.handleClickAlphabet(e));
-        });
-    }    
-    
-    resetGame() {
-        if (this.gameOver) {
-            this.gameOver = false;
-    
-            // 타이머 초기화
-            clearInterval(this.timerId);  // 기존 타이머 멈추기
-            
-            // 게임 초기화
-            this.attemptsLeft = ATTEMPTS;
-            this.timerCount = TIME_LIMIT;
-            this.stage = 0;
-            this.answer = ANSWERS[Math.floor(Math.random() * ANSWERS.length)];
-            this.problemWord = this.answer.split('').map(char => char === ' ' ? ' ' : ' _').join('');  // 문제 단어 초기화
-            this.word.innerText = this.problemWord;
-            this.tries.innerText = this.attemptsLeft;
-    
-            // 알파벳 버튼 상태 초기화
-            this.alphabet.forEach(button => {
-                button.disabled = false;
-                button.classList.remove('clicked'); // 클릭된 상태 초기화
-            });
-    
-            this.imag.forEach(img => img.classList.add('invisible'));
-    
-            this.timer.innerText = this.timerCount;
-            this.timer.style.color = 'black';
-    
-            makeElementInvisible(this.successText);
-            makeElementInvisible(this.failText);
-            makeElementInvisible(this.restartButton1);
-            makeElementInvisible(this.restartButton2);
-    
-            makeElementInvisible(document.getElementById('startScreen')); 
-    
-            makeElementVisible(document.getElementById('gameScreen'));
-    
-            this.startTimer();  
-    
-            this.startGame();
-        }
-    }
-    
-    
-   
-
-
-   
-    
+    return result;
+  };
 }
 
 export default Game;

@@ -1,12 +1,9 @@
 export function makeElementVisible(element) {
+  element.classList.add("flex-visible");
   element.classList.remove("invisible");
-  element.style.display = 'block';
-  element.classList.add("border");
 }
 
 export function makeElementInvisible(element) {
+  element.classList.remove("flex-visible");
   element.classList.add("invisible");
-  element.style.display = 'none';
-  element.classList.remove("border");
-
 }
